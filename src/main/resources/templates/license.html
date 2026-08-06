@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='license')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>License</h1>
+        <div class="subtitle">Billing pauses if the license lapses - existing sales, stock, and khata records are never affected.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-4" style="margin-bottom:20px;">
+      <div class="stat-card">
+        <div class="label">Status</div>
+        <div class="value" id="stat-status">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Valid until</div>
+        <div class="value" id="stat-expiry">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Days remaining</div>
+        <div class="value" id="stat-days">-</div>
+      </div>
+    </div>
+
+    <div class="card" style="max-width:520px;">
+      <div class="field">
+        <label>Device ID (give this to your system provider when renewing)</label>
+        <input id="device-id" readonly>
+      </div>
+      <div class="field">
+        <label>Renewal key</label>
+        <input id="license-key" placeholder="e.g. K3F2Q-8B1C3D9F2A11">
+      </div>
+      <button class="btn btn-success btn-lg" onclick="activateLicense()">Activate</button>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/license.js}"></script>
+</body>
+</html>
