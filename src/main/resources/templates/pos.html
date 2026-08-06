@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='pos')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Billing</h1>
+        <div class="subtitle">Scan a barcode or type the item name to add it to the cart</div>
+      </div>
+      <div id="shift-banner"></div>
+    </div>
+
+    <div class="pos-layout">
+      <div>
+        <div class="scan-box">
+          <label for="scan-input">Scan barcode or search item</label>
+          <input id="scan-input" class="scan-input" type="text" placeholder="Scan here..." autocomplete="off" autofocus>
+        </div>
+
+        <div class="card">
+          <h3 class="section-title">Quick search results</h3>
+          <div id="search-results"></div>
+        </div>
+      </div>
+
+      <div class="cart-panel">
+        <h3 class="section-title">Current sale</h3>
+        <div id="cart-list">
+          <div class="empty-state" id="cart-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+            <div>Cart is empty. Scan an item to begin.</div>
+          </div>
+        </div>
+
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span id="cart-total">Rs 0</span>
+        </div>
+
+        <div class="payment-methods">
+          <div class="pay-option selected" data-method="CASH">Cash</div>
+          <div class="pay-option" data-method="CARD">Card</div>
+          <div class="pay-option" data-method="EASYPAISA">Easypaisa</div>
+          <div class="pay-option" data-method="JAZZCASH">JazzCash</div>
+          <div class="pay-option" data-method="KHATA" style="grid-column: span 2;">Khata (credit to a regular customer)</div>
+        </div>
+
+        <div id="khata-picker" style="display:none; margin-bottom:14px;">
+          <label for="khata-customer-search">Select customer</label>
+          <input id="khata-customer-search" type="text" placeholder="Search customer by name or phone...">
+          <div id="khata-customer-results" style="margin-top:8px;"></div>
+          <div id="khata-selected" style="display:none; margin-top:10px; padding:10px 12px; background:#FFF7E9; border-radius:10px; font-size:14px; font-weight:700;"></div>
+        </div>
+
+        <button id="checkout-btn" class="btn btn-success btn-lg btn-block" disabled>
+          Complete sale
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+
+<script>window.currentUsername = /*[[${#authentication.name}]]*/ 'cashier';</script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/pos.js}"></script>
+</body>
+</html>
