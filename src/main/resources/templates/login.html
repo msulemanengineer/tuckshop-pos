@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    .login-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1F2430;
+    }
+    .login-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      width: 380px;
+      max-width: 90vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: fadeIn 0.4s ease;
+    }
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .login-brand .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--amber); }
+    .login-sub { color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; }
+  </style>
+</head>
+<body>
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-brand"><span class="dot"></span><span>Tuck Shop POS</span></div>
+    <div class="login-sub">Sign in to continue</div>
+
+    <div th:if="${param.error}" class="badge badge-danger" style="display:block; padding:12px; margin-bottom:16px; border-radius:10px;">
+      Wrong username or password. Try again.
+    </div>
+    <div th:if="${param.loggedout}" class="badge badge-ok" style="display:block; padding:12px; margin-bottom:16px; border-radius:10px;">
+      You've been signed out.
+    </div>
+
+    <form method="post" th:action="@{/login}">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autofocus autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khata - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<script>window.isOwner = false;</script>
+<span sec:authorize="hasRole('OWNER')"><script>window.isOwner = true;</script></span>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='khata')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Khata (customer credit)</h1>
+        <div class="subtitle">Regulars who buy now and pay later</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openAddCustomerModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Add customer
+      </button>
+    </div>
+
+    <div class="grid grid-4" style="margin-bottom:20px;">
+      <div class="stat-card warn" style="grid-column: span 2;">
+        <div class="label">Total outstanding (all customers owe)</div>
+        <div class="value" id="stat-total-outstanding">Rs 0</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <input id="customer-search" type="text" placeholder="Search customer by name or phone...">
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Credit limit</th>
+            <th>Owes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="customer-rows"></tbody>
+      </table>
+      <div id="customer-empty" class="empty-state" style="display:none;">No customers yet.</div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/khata.js}"></script>
+</body>
+</html>

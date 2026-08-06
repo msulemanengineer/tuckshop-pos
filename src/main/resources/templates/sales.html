@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales history - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='sales')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Sales history</h1>
+        <div class="subtitle">All transactions, most recent first</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Sale #</th>
+            <th>Date &amp; time</th>
+            <th>Items</th>
+            <th>Cashier</th>
+            <th>Payment</th>
+            <th style="text-align:right;">Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="sales-rows"></tbody>
+      </table>
+      <div id="sales-empty" class="empty-state" style="display:none;">No sales recorded yet.</div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/sales.js}"></script>
+</body>
+</html>

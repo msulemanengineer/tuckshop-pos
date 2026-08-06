@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edited sales - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='sale-edits')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Edited sales</h1>
+        <div class="subtitle">Every time a completed sale's quantity was corrected after checkout. Each one needed your PIN - use this page to check the reasons match what actually happened.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-weight:700; margin-bottom:12px;">Total removed per cashier</div>
+      <table>
+        <thead><tr><th>Cashier</th><th>Number of edits</th><th style="text-align:right;">Total amount removed</th></tr></thead>
+        <tbody id="cashier-summary-rows"></tbody>
+      </table>
+      <div id="summary-empty" class="empty-state" style="display:none;">No edits recorded yet.</div>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Date &amp; time</th>
+            <th>Sale #</th>
+            <th>Cashier</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th style="text-align:right;">Amount removed</th>
+            <th>Reason given</th>
+          </tr>
+        </thead>
+        <tbody id="edit-rows"></tbody>
+      </table>
+      <div id="edits-empty" class="empty-state" style="display:none;">No edits recorded yet.</div>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/sale-edits.js}"></script>
+</body>
+</html>

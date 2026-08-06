@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Receipt</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      width: 280px;
+      margin: 0 auto;
+      padding: 16px;
+      font-size: 13px;
+      color: #000;
+    }
+    .center { text-align: center; }
+    .line { border-top: 1px dashed #000; margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 2px 0; vertical-align: top; }
+    .right { text-align: right; }
+    .total-row { font-weight: bold; font-size: 15px; }
+    .shop-name { font-size: 16px; font-weight: bold; }
+    .print-btn {
+      display: block; width: 100%; margin-top: 16px; padding: 12px;
+      font-size: 15px; font-weight: bold; cursor: pointer;
+    }
+    @media print {
+      .no-print { display: none; }
+      body { width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="center shop-name">Highway Tuck Shop</div>
+  <div class="center">Petrol Pump Counter</div>
+  <div class="line"></div>
+  <div id="receipt-meta"></div>
+  <div class="line"></div>
+  <table id="receipt-items"></table>
+  <div class="line"></div>
+  <table>
+    <tr class="total-row"><td>TOTAL</td><td class="right" id="receipt-total">Rs 0</td></tr>
+  </table>
+  <div class="line"></div>
+  <div id="receipt-payment"></div>
+  <div class="center" style="margin-top:14px;">Thank you - drive safe!</div>
+
+  <button class="print-btn no-print" onclick="window.print()">Print this receipt</button>
+
+  <script th:inline="javascript">
+    var saleId = /*[[${saleId}]]*/ 0;
+
+    fetch('/api/sales/' + saleId)
+      .then(function (r) { return r.json(); })
+      .then(function (sale) {
+        var dt = new Date(sale.saleDate);
+        document.getElementById('receipt-meta').innerHTML =
+          'Sale #' + sale.id + '<br>' +
+          dt.toLocaleDateString('en-PK') + ' ' + dt.toLocaleTimeString('en-PK', {hour:'2-digit', minute:'2-digit'}) + '<br>' +
+          'Served by: ' + (sale.cashierUsername || '-');
+
+        var rows = sale.items.map(function (item) {
+          return '<tr><td>' + item.productName + '<br><span style="font-size:11px;">' + item.quantity + ' x Rs ' + item.unitPrice + '</span></td>' +
+            '<td class="right">Rs ' + item.subtotal + '</td></tr>';
+        }).join('');
+        document.getElementById('receipt-items').innerHTML = rows;
+        document.getElementById('receipt-total').textContent = 'Rs ' + sale.totalAmount;
+
+        var paymentLabel = sale.paymentMethod === 'KHATA'
+          ? 'Paid on credit (Khata)' + (sale.customerNameSnapshot ? ' - ' + sale.customerNameSnapshot : '')
+          : 'Paid by ' + sale.paymentMethod;
+        document.getElementById('receipt-payment').textContent = paymentLabel;
+      })
+      .catch(function () {
+        document.getElementById('receipt-meta').textContent = 'Could not load this receipt.';
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <style>
+    .preset-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+    .preset-btn {
+      padding: 10px 16px; border-radius: 10px; border: 2px solid var(--line);
+      background: #fff; font-weight: 700; font-size: 14px; cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-btn.active { border-color: var(--amber); background: #FFF7E9; color: var(--amber-dark); }
+  </style>
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='reports')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Reports</h1>
+        <div class="subtitle">Sales broken down by time period, product, customer, and payment method</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-primary" onclick="exportReport('csv')">Export CSV</button>
+        <button class="btn btn-primary" onclick="exportReport('xlsx')">Export Excel</button>
+        <button class="btn btn-primary" onclick="exportReport('pdf')">Export PDF</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="preset-row" id="preset-row"></div>
+      <div class="grid grid-4">
+        <div class="field" style="margin-bottom:0;"><label>From</label><input id="from-date" type="date"></div>
+        <div class="field" style="margin-bottom:0;"><label>To</label><input id="to-date" type="date"></div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Customer (khata only)</label>
+          <select id="customer-filter"><option value="">All customers</option></select>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Payment method</label>
+          <select id="payment-filter">
+            <option value="">All methods</option>
+            <option value="CASH">Cash</option>
+            <option value="CARD">Card</option>
+            <option value="EASYPAISA">Easypaisa</option>
+            <option value="JAZZCASH">JazzCash</option>
+            <option value="KHATA">Khata</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-4" style="margin-bottom:20px;">
+      <div class="stat-card">
+        <div class="label">Total revenue (incl. khata)</div>
+        <div class="value" id="stat-revenue">Rs 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Cash collected (incl. khata payments)</div>
+        <div class="value" id="stat-cash">Rs 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Transactions</div>
+        <div class="value" id="stat-transactions">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Items sold</div>
+        <div class="value" id="stat-items">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total profit</div>
+        <div class="value" id="stat-profit">Rs 0</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="card">
+        <h3 class="section-title">Sales by day</h3>
+        <div class="bar-chart" id="day-chart"></div>
+      </div>
+      <div class="card">
+        <h3 class="section-title">By payment method</h3>
+        <div id="method-breakdown"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="card">
+        <h3 class="section-title">Product profitability</h3>
+        <table>
+          <thead><tr><th>Product</th><th>Qty sold</th><th style="text-align:right;">Cost value</th><th style="text-align:right;">Selling value</th><th style="text-align:right;">Profit</th></tr></thead>
+          <tbody id="products-table"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3 class="section-title">By customer (khata)</h3>
+        <table>
+          <thead><tr><th>Customer</th><th style="text-align:right;">Total bought on credit</th></tr></thead>
+          <tbody id="customers-table"></tbody>
+        </table>
+        <div id="customers-empty" class="empty-state" style="display:none;">No khata sales in this range.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3 class="section-title">All transactions in range</h3>
+      <table>
+        <thead><tr><th>Sale #</th><th>Date</th><th>Items</th><th>Payment</th><th>Cashier</th><th>Customer</th><th style="text-align:right;">Total</th></tr></thead>
+        <tbody id="transactions-table"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="section-title">Recent staff activity</h3>
+      <div id="activity-log"></div>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/reports.js}"></script>
+</body>
+</html>

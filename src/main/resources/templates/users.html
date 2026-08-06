@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff accounts - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='users')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Staff accounts</h1>
+        <div class="subtitle">Add a login for anyone working the counter</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openAddUserModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Add staff account
+      </button>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="user-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/users.js}"></script>
+</body>
+</html>
