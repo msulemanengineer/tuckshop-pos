@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backups - Tuck Shop POS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments/nav :: sidebar(active='backups')}"></div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <h1>Backups</h1>
+        <div class="subtitle">A daily backup of the whole database (sales, stock, khata ledger) is taken automatically. Download a copy to your phone regularly so a shortlisted backup survives even if this PC doesn't.</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="runBackupNow()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>
+        Backup now
+      </button>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>File</th><th>Created</th><th>Size</th><th></th></tr>
+        </thead>
+        <tbody id="backup-rows"></tbody>
+      </table>
+      <div id="empty-state" style="display:none; padding: 24px; text-align:center; color: var(--ink-soft);">
+        No backups yet - click "Backup now" to create the first one.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/backups.js}"></script>
+</body>
+</html>

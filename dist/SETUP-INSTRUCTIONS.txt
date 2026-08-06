@@ -1,0 +1,64 @@
+TUCK SHOP POS - SETUP ON THE SHOP COMPUTER
+============================================
+
+STEP 1 - Install Java (one time only)
+--------------------------------------
+Download and install "Temurin 17 JRE" for Windows from:
+  https://adoptium.net/temurin/releases/?version=17
+Choose the .msi installer, run it, click Next through the defaults.
+
+STEP 2 - Copy this folder
+--------------------------
+Copy this whole folder to the shop computer, e.g. to:
+  C:\TuckShopPOS\
+
+STEP 3 - First run
+--------------------
+Double-click start-pos.bat
+Wait for the black window to say "Tuck Shop POS is running."
+Open a browser (Chrome/Edge) and go to:
+  http://localhost:8080
+Leave the black window open - closing it stops the program.
+
+STEP 4 - Log in and change the default passwords immediately
+----------------------------------------------------------------
+  Owner login:   username: owner     password: owner123
+  Cashier login: username: cashier   password: cashier123
+Go to "Staff accounts" (owner only) and click "Reset password" for both
+accounts. Pick passwords only you and your staff know.
+
+STEP 5 - Make it start automatically after every reboot
+------------------------------------------------------------
+Double-click enable-autostart.bat (only needs to be done once).
+Now if the computer restarts (e.g. after a power cut), the system comes
+back on its own - no one needs to remember to start it.
+
+STEP 6 - Let the owner check it from his phone
+---------------------------------------------------
+1. Make sure the shop computer and the owner's phone are on the SAME WiFi.
+2. On the shop computer, open Command Prompt and type: ipconfig
+   Look for "IPv4 Address", e.g. 192.168.1.10
+3. On the phone's browser, go to: http://192.168.1.10:8080 (use the real
+   number from step 2) and bookmark it.
+
+STEP 7 - Barcode scanner (if you have one)
+-----------------------------------------------
+Just plug it in via USB. No setup needed - click into the barcode box on
+the Billing page and scan; it works like a keyboard typing the code.
+
+STEP 8 - Take a backup right away
+--------------------------------------
+Log in as owner, go to "Backups" in the sidebar, click "Backup now".
+A backup also happens automatically every night. Check this page from your
+phone every week or so and download a copy - that's your safety copy if
+this computer is ever lost, stolen, or the hard drive fails.
+
+STEP 9 - Note the License Device ID
+-----------------------------------------
+Log in as owner, go to "License" in the sidebar, and note down the Device
+ID shown there. Send it to your system provider before the trial period
+ends so they can issue your renewal key.
+
+If anything doesn't work, contact your system provider with:
+  - What you did right before the problem
+  - Any error message shown (take a photo of the screen)
